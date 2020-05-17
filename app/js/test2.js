@@ -57,7 +57,7 @@ var renderTemplate = function(normalizedBook) {
 $(document).ready(function() {
   $(".book-search-input").on("input", $.debounce(3000, function() {
     var value = $(this).val();
-    if (value.length >= 3) {
+    if (value.length > 3) {
       getBook(value);
     }
   }))
