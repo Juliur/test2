@@ -31,7 +31,7 @@ gulp.task('minify-js', function(){
 
 // Minify html
 gulp.task('minify-html', function() {
-  return gulp.src('app/test2.html')
+  return gulp.src('dist/test2.html')
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist/'));
 });
@@ -47,3 +47,5 @@ gulp.task('img', function() {
               .pipe(gulp.dest('dist/img')); 
 });
 
+// Build Production Site with all updates
+gulp.task('build', gulp.series('autoprefixes', 'cssnano', 'minify-js', 'minify-html', 'img'));

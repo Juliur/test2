@@ -1,5 +1,5 @@
 "use strict";
-var getBook = function(query) {
+let getBook = function(query) {
   $.ajax({
       url: "https://www.googleapis.com/books/v1/volumes?",
       data: {
@@ -7,14 +7,14 @@ var getBook = function(query) {
       }
     })
     .done(function(data) {
-      var booksArray = data.items;
+      let booksArray = data.items;
 
       //clear previous results before rendering new collection
       $(".book-search-result").html("");
 
       if (booksArray) {
         $.each(booksArray, function(index, book) {
-          var normalizedBook = normalizeBookItem(book);
+          let normalizedBook = normalizeBookItem(book);
           $(".book-search-result")
             .append(renderTemplate(normalizedBook))
         })
@@ -25,12 +25,12 @@ var getBook = function(query) {
     .fail(function(xhr) {
       console.log("error", xhr);
     });
-};
+}
 
-var normalizeBookItem = function(book) {
+let normalizeBookItem = function(book) {
   return {
     //checking for undefined image links
-    "img": book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : "../img/image-not-available.jpg",
+    "img": book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : "img/image-not-available.jpg",
     "title": book.volumeInfo.title,
     // checking for undefined authors
     "authors": book.volumeInfo.authors ? book.volumeInfo.authors.join(", ") : "N/A",
@@ -39,7 +39,7 @@ var normalizeBookItem = function(book) {
   };
 }
 
-var renderTemplate = function(normalizedBook) {
+let renderTemplate = function(normalizedBook) {
   return `<div class="result-item">
             <div class="result-img-wrap">
               <img src=${normalizedBook.img} class="result-img">
@@ -56,8 +56,8 @@ var renderTemplate = function(normalizedBook) {
 
 $(document).ready(function() {
   $(".book-search-input").on("input", $.debounce(3000, function() {
-    var value = $(this).val();
-    if (value.length > 3) {
+    let value = $(this).val();
+    if (value.length >= 3) {
       getBook(value);
     }
   }))
